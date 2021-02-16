@@ -1,0 +1,26 @@
+{
+    "nombreApp" : "Formulario",
+    "encuestas" : [
+        {
+            "id" : 1,
+            "ruta" : "https://docs.google.com/forms/d/e/1FAIpQLSdDntk0oQ9IIeV2TCHDtbSH9_Cx3JyUf3dIsdKqoExhf4-BUw/viewform?usp=sf_link",
+            "estado": true
+        },
+        {
+            "id" : 2,
+            "ruta" : "https://docs.google.com/forms/d/e/1FAIpQLSfYTGT_I_8OPPmTyqBllT6bKnxOpvaQot1eFAHTRUFT3fWi0w/viewform?usp=sf_link",
+            "estado": true
+        },
+        {
+            "id" : 3,
+            "ruta" : "https://docs.google.com/forms/d/e/1FAIpQLSdDntk0oQ9IIeV2TCHDtbSH9_Cx3JyUf3dIsdKqoExhf4-BUw/viewform?usp=sf_link",
+            "estado": true
+        },
+        {
+            "id" : 4,
+            "ruta" : "https://forms.gle/pi4ueH55tCivr38x7",
+            "estado": true
+        }
+
+    ]
+}
