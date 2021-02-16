@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:prueba_formgoogle_app/providers/providers.dart';
+import 'package:prueba_formgoogle_app/models/EncuestaModel.dart';
+import 'package:prueba_formgoogle_app/providers/ProviderEncuesta.dart';
 
 class ListPage extends StatefulWidget {
   @override
@@ -7,49 +8,54 @@ class ListPage extends StatefulWidget {
 }
 
 class _ListPageState extends State<ListPage> {
+  final providerEncuesta = new ProviderEncuesta();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Formularios"),
-      ),
-      body: _lista(),
-    );
+        appBar: AppBar(
+          title: Text("Formularios"),
+        ),
+        body: _crearListado(),
+        floatingActionButton: _crearBoton(context));
   }
 
-  Widget _lista() {
-    /* menuProvider.cargarData(); */
+  Widget _crearListado() {
     return FutureBuilder(
-      future: menuProvider.cargarData(),
-      initialData: [],
-      builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
-        print(snapshot.data);
+      future: providerEncuesta.cargarEncuesta(),
+      builder: (BuildContext context, AsyncSnapshot<List<Encuesta>> snapshot) {
+        if (snapshot.hasData) {
+          final encuestas = snapshot.data;
 
-        return ListView(children: _listaItems(snapshot.data, context));
+          return ListView.builder(
+            itemCount: encuestas.length,
+            itemBuilder: (BuildContext context, int i) =>
+                crearItem(encuestas[i]),
+          );
+        } else {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
       },
     );
   }
 
-  List<Widget> _listaItems(List<dynamic> data, BuildContext context) {
-    final List<Widget> opciones = [];
-    int conteo = 0;
+  Widget _crearBoton(BuildContext context) {
+    return FloatingActionButton(
+      child: Icon(Icons.add),
+      onPressed: () => Navigator.pushNamed(context, 'create')
+          .then((value) => setState(() {})),
+      backgroundColor: Colors.deepPurple,
+    );
+  }
 
-    data.forEach((opt) {
-      conteo = conteo + 1;
-      final ruta = opt['ruta'];
-
-      final widgetTemp = ListTile(
-        title: Text('Encuesta $conteo'),
-        trailing: Icon(Icons.keyboard_arrow_right),
-        onTap: () {
-          /* final route = MaterialPageRoute(builder: (context) => AlertPage());
-          Navigator.push(context, route); */
-          Navigator.pushNamed(context, 'home', arguments: ruta);
-        },
-      );
-      opciones..add(widgetTemp)..add(Divider());
-    });
-
-    return opciones;
+  Widget crearItem(Encuesta encuesta) {
+    return ListTile(
+      title: Text(encuesta.nombre),
+      trailing: Icon(Icons.keyboard_arrow_right),
+      onTap: () {
+        Navigator.pushNamed(context, 'home', arguments: encuesta);
+      },
+    );
   }
 }

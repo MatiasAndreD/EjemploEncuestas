@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prueba_formgoogle_app/pages/CreatePage.dart';
 import 'package:prueba_formgoogle_app/pages/HomePage.dart';
 import 'package:prueba_formgoogle_app/pages/ListPage.dart';
 
@@ -13,7 +14,8 @@ class MyApp extends StatelessWidget {
       initialRoute: 'list',
       routes: {
         'list': (BuildContext context) => ListPage(),
-        'home': (BuildContext context) => HomePage()
+        'home': (BuildContext context) => HomePage(),
+        'create': (BuildContext context) => CreatePage()
       },
     );
   }

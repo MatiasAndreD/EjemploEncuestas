@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:prueba_formgoogle_app/preferences/preference_liststate.dart';
+import 'package:prueba_formgoogle_app/models/EncuestaModel.dart';
+import 'package:prueba_formgoogle_app/providers/ProviderEncuesta.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -11,12 +12,11 @@ class _HomePageState extends State<HomePage> {
   InAppWebViewController controller;
   String url;
   String currentUrl;
-  int _id;
-  bool _estado;
-
+  ProviderEncuesta providerEncuesta = new ProviderEncuesta();
   /*  final prefs = new PreferenciasUsuario(); */
 
   double progress = 0.0;
+  Encuesta encuesta = new Encuesta();
 
   @override
   void initState() {
@@ -27,9 +27,13 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context).settings.arguments;
+    final Encuesta encuestaData = ModalRoute.of(context).settings.arguments;
 
-    url = args;
+    if (encuestaData != null) {
+      encuesta = encuestaData;
+    }
+
+    url = encuestaData.link;
 
     return Scaffold(
       appBar: AppBar(
@@ -66,7 +70,14 @@ class _HomePageState extends State<HomePage> {
                         final c = currentUrl.split(
                           "/formResponse",
                         );
-                        if (c.length == 1) {}
+                        print("La lista es de valor: $c");
+
+                        if (c.length == 2) {
+                          encuesta.estado = false;
+                          print(
+                              "La encuesta tiene los siguientes valores ${encuesta.id},${encuesta.nombre}, ${encuesta.estado} ");
+                          providerEncuesta.putEncuestaById(encuesta);
+                        }
                       });
                     },
                     onLoadStop: (controller, url) {
