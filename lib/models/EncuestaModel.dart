@@ -15,7 +15,7 @@ class Encuesta {
   String id;
   String nombre;
   String link;
-  bool estado;
+  int estado;
 
   factory Encuesta.fromJson(Map<String, dynamic> json) => Encuesta(
         id: json["id"],

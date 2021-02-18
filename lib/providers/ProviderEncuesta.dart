@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:prueba_formgoogle_app/models/EncuestaModel.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:prueba_formgoogle_app/providers/db_provider.dart';
 
 class ProviderEncuesta {
   final String _url =
@@ -11,7 +12,7 @@ class ProviderEncuesta {
   Future<bool> crearEncuesta(Encuesta encuesta) async {
     final url = '$_url/encuestas.json';
 
-    encuesta.estado = true;
+    encuesta.estado = 1;
 
     final resp = await http.post(url, body: encuestaToJson(encuesta));
 
@@ -31,13 +32,16 @@ class ProviderEncuesta {
 
     if (decodedData == null) return [];
 
-    decodedData.forEach((id, encuesta) {
+    decodedData.forEach((id, encuesta) async {
       final encTemp = Encuesta.fromJson(encuesta);
+
       encTemp.id = id;
 
-      if (encTemp.estado == true) {
-        encuestas.add(encTemp);
-      }
+      await DBProvider.db.findById(id).then((value) {
+        if (value) {
+          encuestas.add(encTemp);
+        }
+      });
     });
 
     return encuestas;

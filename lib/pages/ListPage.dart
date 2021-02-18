@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:prueba_formgoogle_app/models/EncuestaModel.dart';
 import 'package:prueba_formgoogle_app/providers/ProviderEncuesta.dart';
+import 'package:prueba_formgoogle_app/providers/db_provider.dart';
 
 class ListPage extends StatefulWidget {
   @override
@@ -11,6 +12,9 @@ class _ListPageState extends State<ListPage> {
   final providerEncuesta = new ProviderEncuesta();
   @override
   Widget build(BuildContext context) {
+    //TODO: Temporal leer la base de datos
+    DBProvider.db.database;
+
     return Scaffold(
         appBar: AppBar(
           title: Text("Formularios"),

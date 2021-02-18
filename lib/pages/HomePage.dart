@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:prueba_formgoogle_app/models/EncuestaModel.dart';
 import 'package:prueba_formgoogle_app/providers/ProviderEncuesta.dart';
+import 'package:prueba_formgoogle_app/providers/db_provider.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -70,13 +71,10 @@ class _HomePageState extends State<HomePage> {
                         final c = currentUrl.split(
                           "/formResponse",
                         );
-                        print("La lista es de valor: $c");
-
                         if (c.length == 2) {
-                          encuesta.estado = false;
-                          print(
-                              "La encuesta tiene los siguientes valores ${encuesta.id},${encuesta.nombre}, ${encuesta.estado} ");
-                          providerEncuesta.putEncuestaById(encuesta);
+                          /* encuesta.estado = 0;
+                          providerEncuesta.putEncuestaById(encuesta); */
+                          DBProvider.db.nuevoScanRaw(encuesta);
                         }
                       });
                     },
